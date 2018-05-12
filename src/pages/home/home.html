@@ -20,7 +20,13 @@
             style="perspective: 600px;"
             shadowmap-type="pcfsoft">
 
-            <!-- the sun -->
+            <!-- the camera -->
+            <!-- <i-perspective-camera></i-perspective-camera> -->
+
+            <!-- daylight -->
+            <!-- <i-ambient-light></i-ambient-light> -->
+
+            <!-- the moon -->
             <i-mesh id="light" has="sphere-geometry basic-material"
               size="10 10 10" color="gold"
               position="280 20 -300"
@@ -31,14 +37,23 @@
             <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
             <i-sphere size="50 50 50" position="250 300 -1000" color="#C390D4"></i-sphere>
 
-            <i-box #flybox size="50 50 50" position="600 400 -900" rotation="30 30 30" color="#D4A190"></i-box>
+            <i-box #flybox size="50 50 50" position="600 400 -900" rotation="30 30 30" color="#D4A190">
+                <!-- <div id="innode">3D</div> -->
+            </i-box>
 
-            <!-- box standing in floor (Y=600) -->
-            <i-box size="50 50 50" position="500 600 -700" color="#D4A190"></i-box>
+            <!-- box standing in floor (Y=600).
+              mountPoint moves the box one pos compared to its size -->
+            <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="0 0 1"></i-box>
+            <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="0 0 0"></i-box>
+            <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="1 0 0"></i-box>
+            <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="2 0 0"></i-box>
+
             <i-box size="50 50 50" position="1000 600 -1300" color="#D4A190"></i-box>
             
-            <!-- floor -->
-            <i-plane size="1500 1500" position="80 -100 -1300" rotation="90 0 0"></i-plane>
+            <!-- floor tilted forward 90dg from standing, vertical vindow - the viewpoint to lying, horizontal in height, 
+              Y=600. Corresponds to Y=-100. ((1500-100)/2)-100=600.
+              Z=-1300 moves the floor forward from 0 (away from viewpoint) -->
+            <i-plane size="1500 1500" position="0 -100 -1300" rotation="90 0 0"></i-plane>
 
             <!-- <i-node #inode id="inode"
               sizeMode="proportional proportional"
