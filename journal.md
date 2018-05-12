@@ -16,6 +16,14 @@ npm install infamous --save
 
 Added ./config/copy.config.js
 
+index.html:
+  <script src="assets/lib/infamous/global.js"></script>
+
+home.html:
+Added html from https://infamous.io/docs/install.html
+
+server.js added for heroku
+
 The End.
 
 
