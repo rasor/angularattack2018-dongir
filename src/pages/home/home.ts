@@ -13,13 +13,13 @@ export class HomePage implements AfterViewInit {
     infamous.html.useDefaultNames();
   }
 
-  // @ViewChild("inode") inode: ElementRef;
+  @ViewChild("flybox") flybox: ElementRef;
   ngAfterViewInit(): void {
     // sample from https://infamous.io/docs/workflows.html
     //const {Motor} = infamous.core
-    // let node: any;
-    // node = this.inode.nativeElement; // document.querySelector('i-node')
-    // console.log('Hello ' + node.tagName);
-    // node.rotation = ( x, y, z ) => [ x, ++y, z ] //   
+    let node: any;
+    node = this.flybox.nativeElement; // document.querySelector('i-node')
+    console.log('Hello ' + node.tagName);
+    node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
   }
 }
