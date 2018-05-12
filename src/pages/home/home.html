@@ -20,38 +20,38 @@
             style="perspective: 600px;"
             shadowmap-type="pcfsoft">
 
-            <!-- the camera -->
-            <!-- <i-perspective-camera></i-perspective-camera> -->
-
-            <!-- daylight -->
-            <!-- <i-ambient-light></i-ambient-light> -->
-
-            <!-- the moon -->
-            <i-mesh id="light" has="sphere-geometry basic-material"
-              size="10 10 10" color="gold"
-              position="500 -220 -1200"
-              receive-shadow="false" cast-shadow="false">
-              <i-point-light color="teal" size="0 0 0" cast-shadow="true" intensity="6"></i-point-light>
-            </i-mesh>
-
-            <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
-            <i-sphere size="50 50 50" position="250 300 -1200" color="#C390D4"></i-sphere>
-
-            <i-box #flybox size="50 50 50" position="600 400 -1100" rotation="30 30 30" color="#D4A190">
-                <!-- <div id="innode">3D</div> -->
-            </i-box>
-
             <!-- floor tilted forward 90dg from standing, vertical vindow - the viewpoint to lying, horizontal in height, 
               Y=600. Corresponds to Y=-100. ((1500-100)/2)-100=600.
               Z=-1300 moves the floor forward from 0 (away from viewpoint) 
               align="0.5 0" mountPoint="0.5 0 0" centers left corner to viewpoint and then moves it ½ a witdh to left (= centers the center) 
             -->
-            <i-plane size="2550 1550" position="0 -100 -1600" rotation="90 0 0" align="0.5 0" mountPoint="0.5 0 0">
+            <i-plane #maze id="maze" size="2550 1550" position="0 -100 -1600" rotation="90 0 0" align="0.5 0" mountPoint="0.5 0 0">
+              <!-- the camera -->
+              <!-- <i-perspective-camera></i-perspective-camera> -->
+
+              <!-- daylight -->
+              <!-- <i-ambient-light></i-ambient-light> -->
+
+              <!-- the moon -->
+              <i-mesh id="light" has="sphere-geometry basic-material"
+                size="10 10 10" color="gold"
+                position="1000 900 1000"
+                receive-shadow="false" cast-shadow="false">
+                <i-point-light color="teal" size="0 0 0" cast-shadow="true" intensity="6"></i-point-light>
+              </i-mesh>
+
               <!-- box standing on floor (Z=25) - due to it is relative to tilted floor.
                 mountPoint moves the box one pos compared to its size -->
               <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="0 0 0"></i-box><!-- left back -->
               <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="-1 0 0"></i-box><!-- left+1 back -->
               <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="0 -1 0"></i-box><!-- left back-1 closer -->
+
+              <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
+              <i-sphere size="50 50 50" position="900 900 500" color="#C390D4"></i-sphere>
+              <i-box #flybox size="50 50 50" position="1500 1100 300" rotation="30 30 30" color="#D4A190">
+                  <!-- <div id="innode">3D</div> -->
+              </i-box>
+                
             </i-plane>
             
           </i-scene>  
