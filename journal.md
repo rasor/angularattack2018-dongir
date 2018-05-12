@@ -24,6 +24,9 @@ Added html from https://infamous.io/docs/install.html
 
 server.js added for heroku
 
+More for heruko
+https://devdactic.com/deploy-ionic-website-heroku/
+
 The End.
 
 
