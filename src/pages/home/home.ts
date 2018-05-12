@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { NavController, AlertController, Platform } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 //import infamous from 'infamous'
 declare var infamous: any; 
 
@@ -8,32 +8,18 @@ declare var infamous: any;
   templateUrl: 'home.html'
 })
 export class HomePage implements AfterViewInit {
-  @ViewChild("inode") inode: ElementRef;
-
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private platform: Platform) {
+  constructor(public navCtrl: NavController) {
     // invoke infamous https://infamous.io/docs/install.html
     infamous.html.useDefaultNames();
   }
 
+  // @ViewChild("inode") inode: ElementRef;
   ngAfterViewInit(): void {
     // sample from https://infamous.io/docs/workflows.html
-    const {Motor} = infamous.core
-    let node: any;
-    //node = document.querySelector('i-node')
-    node = this.inode.nativeElement;
-    console.log('Hello ' + node.tagName);
-    node.rotation = ( x, y, z ) => [ x, ++y, z ] //   
+    //const {Motor} = infamous.core
+    // let node: any;
+    // node = this.inode.nativeElement; // document.querySelector('i-node')
+    // console.log('Hello ' + node.tagName);
+    // node.rotation = ( x, y, z ) => [ x, ++y, z ] //   
   }
-
-  // https://devdactic.com/deploy-ionic-website-heroku/
-  showPlatform() {
-    let text = 'I run on: ' + this.platform.platforms();
-    let alert = this.alertCtrl.create({
-      title: 'Home',
-      subTitle: text,
-      buttons: ['Ok']
-    });
-    alert.present();
-  }
-
 }
