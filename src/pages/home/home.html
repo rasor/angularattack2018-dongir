@@ -1,25 +1,31 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+        angularattack2018-dongir
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <!-- Vote button -->
   <div id="hackbit-vote-widget"></div>
+
   <!-- https://devdactic.com/deploy-ionic-website-heroku/ -->
-  <button ion-button full (click)="showPlatform()">Where am I running?</button>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-  <div id="content">
-    <i-scene>
-      <i-node #inode id="inode"
-        position="100 100">
-        <div id="innode"> Hello 3D </div>
-      </i-node>
-    </i-scene>  
+  <!-- <button ion-button full (click)="showPlatform()">Where am I running?</button> -->
+
+  <p></p>
+  
+  <div id="frame">
+      <div id="content">
+          <i-scene>
+            <i-node #inode id="inode"
+              sizeMode="proportional proportional"
+              size="0.75 0.75"
+              align="0.5 0.5"
+              mountPoint="0.5 0.5">
+              <div id="innode"> Hello 3D </div>
+            </i-node>
+          </i-scene>  
+        </div>
   </div>
 </ion-content>
