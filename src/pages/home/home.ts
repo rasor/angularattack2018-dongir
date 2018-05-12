@@ -20,6 +20,25 @@ export class HomePage implements AfterViewInit {
     let node: any;
     node = this.flybox.nativeElement; // document.querySelector('i-node')
     console.log('Hello ' + node.tagName);
-    node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
+    //node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
   }
+
+  /*
+  * 0 = isle
+  * 1 = wall
+  * 2 = exit
+  * 3 = player
+  * 4 = monster 
+  */
+  infamousMaze = {
+    "minusLeft": 51,
+    "minusBack": 3,//31,
+    //"width": this.infamousMaze.minusLeft * 50,
+    //"depth": this.infamousMaze.minusBack * 50,
+    "maze": [
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+      1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    ] 
+  };  
 }
