@@ -48,20 +48,12 @@
             <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="1 0 0"></i-box>
             <i-box size="50 50 50" position="500 600 -700" color="#D4A190" mountPoint="2 0 0"></i-box>
 
-            <i-box size="50 50 50" position="1000 600 -1300" color="#D4A190"></i-box>
-            
             <!-- floor tilted forward 90dg from standing, vertical vindow - the viewpoint to lying, horizontal in height, 
               Y=600. Corresponds to Y=-100. ((1500-100)/2)-100=600.
-              Z=-1300 moves the floor forward from 0 (away from viewpoint) -->
-            <i-plane size="1500 1500" position="0 -100 -1300" rotation="90 0 0"></i-plane>
-
-            <!-- <i-node #inode id="inode"
-              sizeMode="proportional proportional"
-              size="0.75 0.75"
-              align="0.5 0.5"
-              mountPoint="0.5 0.5">
-              <div id="innode"> Hello 3D </div>
-            </i-node> -->
+              Z=-1300 moves the floor forward from 0 (away from viewpoint) 
+              align="0.5 0" mountPoint="0.5 0 0" centers left corner to viewpoint and then moves it ½ a witdh to left (= centers the center) 
+            -->
+            <i-plane size="1500 1500" position="0 -100 -1300" rotation="90 0 0" align="0.5 0" mountPoint="0.5 0 0"></i-plane>
             
           </i-scene>  
         </div>
