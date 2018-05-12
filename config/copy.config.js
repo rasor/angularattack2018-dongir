@@ -23,5 +23,12 @@ module.exports = {
     copySwToolbox: {
       src: ['{{ROOT}}/node_modules/sw-toolbox/sw-toolbox.js'],
       dest: '{{BUILD}}'
-    }
+    },
+    copyInfamous: {
+      src: [
+        '{{ROOT}}/node_modules/infamous/global.js'
+      ],
+      // Very important, the dest folder to reference from index.html
+      dest: '{{WWW}}/assets/lib/infamous'
+    }    
   }
