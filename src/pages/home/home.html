@@ -53,8 +53,7 @@
               <i-box size="50 50 50" position="50 500 25" color="#D4A190"></i-box><!-- left+1 back -->
               <i-box size="50 50 50" position="0 550 25" color="#D4A190"></i-box><!-- left back-1 closer -->
               
-              <!-- <i-box *ngFor="let mp of wallMountPoints" size="50 50 50" position="0 0 25" color="#D4A190" [mountPoint]="mp"></i-box> -->
-              <!-- <i-box *ngFor="let wp of wallPositions" size="50 50 50" [position]="wp" color="#D4A190"></i-box> -->
+              <i-box *ngFor="let wp of wallVectorPositions" size="50 50 50" [position]="wp" color="#D4A190"></i-box>
               
               <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
               <i-sphere size="50 50 50" position="900 900 500" color="#C390D4"></i-sphere>

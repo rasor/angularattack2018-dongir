@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Vector3 } from 'three';
+
 //import infamous from 'infamous'
 declare var infamous: any; 
 
@@ -27,8 +29,7 @@ export class HomePage implements AfterViewInit {
   ]};
   infamousMazeSize = {};
   //wallsCount: number;
-  wallMountPoints: string[];
-  wallPositions: string[];
+  wallVectorPositions: Vector3[];
 
   constructor(public navCtrl: NavController) {
     // enable infamous html-tags https://infamous.io/docs/install.html
@@ -53,55 +54,24 @@ export class HomePage implements AfterViewInit {
       "width": this.infamousMaze.rows * BOX_SIZE,
       "depth": this.infamousMaze.cols * BOX_SIZE,
     };
-    // Convert maze content to wallMountPoints
-    this.wallMountPoints = this.getWallMountPoints();
-    this.wallPositions = this.getWallPositions();
+    // Convert maze content to wallPositions
+    this.wallVectorPositions = this.getVectorWallPositions();
   }
 
-  /* Convert maze content to wallPositions
+    /* Convert maze content to wallVectorPositions
   * "0 0 25" = Left Back ConstantHeightAboveFloor 
   * "50 0 25" = Left+1 Back ConstantHeightAboveFloor 
   * "0 50 25" = Left Back+1 closer ConstantHeightAboveFloor 
   * */
- private getWallPositions(): string[] {
-  let wallPositions: string[] = [];
-  let mazeIndex: number;
-  let left: string;
-  let back: string;
-  let currentContentType: number;
-  const HEIGTH_ABOVE_FLOOR = String(BOX_SIZE/2);
-  
-  // Loop rows
-  for (let row = 0; row < this.infamousMaze.rows; row++) {
-    // Loop cols
-    for (let col = 0; col < this.infamousMaze.cols; col++) {
-      // Read from maze
-      mazeIndex = (row * this.infamousMaze.cols) + col;
-      currentContentType = this.infamousMaze.maze[mazeIndex]
-      // If there is a wall then calc mountPoint
-      if (currentContentType === 1) {
-        left = String(col * BOX_SIZE);
-        back = String(row * BOX_SIZE);
-        wallPositions.push(left + " " + back + " " + HEIGTH_ABOVE_FLOOR);
-      }
-    }
-  }
-  return wallPositions;
-}
-
-/* Convert maze content to wallMountPoints
-  * "0 0 25" = Left Back ConstantHeightAboveFloor 
-  * "-1 0 25" = Left+1 Back ConstantHeightAboveFloor 
-  * "0 -1 25" = Left Back+1 closer ConstantHeightAboveFloor 
-  * */
-  private getWallMountPoints(): string[] {
-    let wallMountPoints: string[] = [];
+  private getVectorWallPositions(): Vector3[] {
+    let wallPositions: Vector3[] = [];
     let mazeIndex: number;
     let left: string;
     let back: string;
     let currentContentType: number;
-    const HEIGTH_ABOVE_FLOOR = String(BOX_SIZE/2);
-
+    let currentVector: Vector3;
+    const HEIGTH_ABOVE_FLOOR = BOX_SIZE/2;
+    
     // Loop rows
     for (let row = 0; row < this.infamousMaze.rows; row++) {
       // Loop cols
@@ -111,13 +81,12 @@ export class HomePage implements AfterViewInit {
         currentContentType = this.infamousMaze.maze[mazeIndex]
         // If there is a wall then calc mountPoint
         if (currentContentType === 1) {
-          left = String(-col);
-          back = String(-row);
-          wallMountPoints.push(left + " " + back + " " + HEIGTH_ABOVE_FLOOR);
+          currentVector = new Vector3(col * BOX_SIZE, row * BOX_SIZE, HEIGTH_ABOVE_FLOOR);
+          wallPositions.push(currentVector);
         }
       }
     }
-    return wallMountPoints;
+    return wallPositions;
   }
 
   @ViewChild("flybox") flybox: ElementRef;
@@ -127,7 +96,7 @@ export class HomePage implements AfterViewInit {
     let node: any;
     node = this.flybox.nativeElement; // document.querySelector('i-node')
     console.log('Hello ' + node.tagName);
-    //node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
+    node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
   }
 
 }
