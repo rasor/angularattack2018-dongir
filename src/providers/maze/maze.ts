@@ -1,44 +1,53 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { catchError, retry } from 'rxjs/operators';
 
 /*
-  Generated class for the MazeProvider provider.
+* https://v5.angular.io/guide/http
+* */
+export interface ExtMaze {
+  pony: number[];
+  domokun: number[];
+  endPoint: number[];
+  size: number[];
+  difficulty: number;
+  data: string[][];
+  mazeId: string;
+  gameState: any;
+}
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class MazeProvider {
+  serviceUrl = 'assets/data/sampleMaze.json';
 
   constructor(public http: HttpClient) {
     console.log('Hello MazeProvider Provider');
   }
 
-  getSampleMaze(): any {
-    // https://angular.io/guide/http
-
-
-    // get users from api
-    // return this.http.get('assets/ordersummary.json')//, options)
-    //     .map((response: Response) => {
-    //         console.log("mock data" + response.json());
-    //         return response.json();
-    //     }
-
-    // )
-    // .catch(this.handleError);
-
-    // this.http.get('assets/data/sampleMaze.json')
-    // .subscribe(data => {
-    //   console.log(data)
-    //   return data;
-    // });
-    
-    // this.http.get('assets/data/sampleMaze.json')
-    // .subscribe(data => this.config = {
-    //   heroesUrl: data['heroesUrl'],
-    //   textfile:  data['textfile']
-    // });
+  getMaze(): Observable<ExtMaze> {
+    return this.http.get<ExtMaze>(this.serviceUrl)
+    .pipe(
+      //retry(3), // retry a failed request up to 3 times
+      catchError(this.handleError) // then handle the error
+    );
   }
+
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // return an ErrorObservable with a user-facing error message
+    return new ErrorObservable(
+      'Something bad happened; please try again later.');
+  }
+
 }

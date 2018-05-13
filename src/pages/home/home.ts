@@ -1,8 +1,7 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Vector3 } from 'three';
-import { MazeProvider } from '../../providers/maze/maze';
-import { ConfigProviderBL } from '../../providers/config/config.compont';
+import { MazeProvider, ExtMaze } from '../../providers/maze/maze';
 
 //import infamous from 'infamous'
 declare var infamous: any; 
@@ -33,18 +32,32 @@ export class HomePage implements AfterViewInit {
   //wallsCount: number;
   wallVectorPositions: Vector3[];
 
-  constructor(public navCtrl: NavController, private mazeSvc: MazeProvider, private cfgSvc: ConfigProviderBL) {
+  extMaze: ExtMaze;
+  error: any;
+
+  constructor(public navCtrl: NavController, public mazeSvc: MazeProvider) {
     // enable infamous html-tags https://infamous.io/docs/install.html
     infamous.html.useDefaultNames();
 
-    let cfgJson = cfgSvc.config;
-
-    //let mazeJson = mazeSvc.getSampleMaze();
-    // Initialize maze data
-    this.prepareMazeData();
+    // Initialize maze data from service
+    this.getMazeData();
   }
 
-  private prepareMazeData():void{
+  private getMazeData() {
+    this.mazeSvc.getMaze()
+      .subscribe(
+        (data: ExtMaze) => this.getMazeData_GotData(data), // success path
+        error => this.error = error // error path
+      );      
+  }
+
+  private getMazeData_GotData(data: ExtMaze): void {
+    // clone the data object, using its known ExtMaze shape
+    this.extMaze = { ...data };
+    this.getMazeData_PrepareMazeData(this.extMaze);
+  }
+
+  public getMazeData_PrepareMazeData(extMaze: ExtMaze):void{
     // Validate initial maze data
     if (this.infamousMaze.rows * this.infamousMaze.cols > this.infamousMaze.maze.length) {
       let errMsg = 'Too few data in infamousMaze.maze[]';
@@ -60,7 +73,7 @@ export class HomePage implements AfterViewInit {
       "depth": this.infamousMaze.cols * BOX_SIZE,
     };
     // Convert maze content to wallPositions
-    this.wallVectorPositions = this.getVectorWallPositions();
+    this.wallVectorPositions = this.getMazeData__GetVectorWallPositions();
   }
 
     /* Convert maze content to wallVectorPositions
@@ -68,7 +81,7 @@ export class HomePage implements AfterViewInit {
   * "50 0 25" = Left+1 Back ConstantHeightAboveFloor 
   * "0 50 25" = Left Back+1 closer ConstantHeightAboveFloor 
   * */
-  private getVectorWallPositions(): Vector3[] {
+  private getMazeData__GetVectorWallPositions(): Vector3[] {
     let wallPositions: Vector3[] = [];
     let mazeIndex: number;
     //let left: string;

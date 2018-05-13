@@ -22,12 +22,4 @@ export class ConfigProviderBL {
         error => this.error = error // error path
       );      
   }
-  // private showConfig() {
-  //   this.cfgSvc.getConfig()
-  //     .subscribe((data: Config) => this.config = {
-  //         heroesUrl: data['heroesUrl'],
-  //         textfile:  data['textfile'],
-  //         readme: data['readme']
-  //     });
-  // }
 }
