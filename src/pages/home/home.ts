@@ -26,20 +26,33 @@ export class HomePage implements AfterViewInit {
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
   ]};
   infamousMazeSize = {};
-  wallsCount: number;
+  //wallsCount: number;
   wallMountPoints: string[];
 
   constructor(public navCtrl: NavController) {
     // enable infamous html-tags https://infamous.io/docs/install.html
     infamous.html.useDefaultNames();
 
+    // Initialize maze data
+    this.prepareMazeData();
+  }
+
+  private prepareMazeData():void{
+    // Validate initial maze data
+    if (this.infamousMaze.rows * this.infamousMaze.cols > this.infamousMaze.maze.length) {
+      let errMsg = 'Too few data in infamousMaze.maze[]';
+      console.error(errMsg)
+      throw new Error(errMsg);
+    }
+
     // Count walls in maze
-    this.wallsCount = this.infamousMaze.maze.filter(contentType => contentType = 1).length;
+    //this.wallsCount = this.infamousMaze.maze.filter(contentType => contentType = 1).length;
     // Calculate pixel size
     this.infamousMazeSize = {
       "width": this.infamousMaze.rows * BOX_SIZE,
       "depth": this.infamousMaze.cols * BOX_SIZE,
     };
+    // Convert maze content to wallMountPoints
     this.wallMountPoints = this.getWallMountPoints();
   }
 
@@ -50,22 +63,23 @@ export class HomePage implements AfterViewInit {
   * */
   private getWallMountPoints(): string[] {
     let wallMountPoints: string[] = [];
-
-    let mazeIndex = 0;
-    let left: string = "0";
-    let back: string = "0";
+    let mazeIndex: number;
+    let left: string;
+    let back: string;
+    let currentContentType: number;
     const HEIGTH_ABOVE_FLOOR = String(BOX_SIZE/2);
+    
     // Loop rows
     for (let row = 0; row < this.infamousMaze.rows; row++) {
       // Loop cols
       for (let col = 0; col < this.infamousMaze.cols; col++) {
         // Read from maze
-        let mazeIndex = (row * this.infamousMaze.cols) + col;
-        let currentContentType = this.infamousMaze.maze[mazeIndex]
+        mazeIndex = (row * this.infamousMaze.cols) + col;
+        currentContentType = this.infamousMaze.maze[mazeIndex]
         // If there is a wall then calc mountPoint
         if (currentContentType === 1) {
-          let left = String(-col);
-          let back = String(-row);
+          left = String(-col);
+          back = String(-row);
           wallMountPoints.push(left + " " + back + " " + HEIGTH_ABOVE_FLOOR);
         }
       }

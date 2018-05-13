@@ -13,7 +13,9 @@
   
   <div id="frame">
       <div id="content">
-          <i-scene experimental-webgl="true" id="scene"
+        <!-- <div class="box" *ngFor="let mp of wallMountPoints" [title]="mp">I am a div {{mp}}</div> -->
+
+        <i-scene experimental-webgl="true" id="scene"
             backgroundColor="dimgray"
             backgroundOpacity="0.5"
             style="perspective: 600px;"
@@ -47,6 +49,8 @@
               <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="-1 -13 0"></i-box><!-- left+1 back -->
               <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="0 -14 0"></i-box><!-- left back-1 closer -->
 
+              <!-- <i-box *ngFor="let mp of wallMountPoints" size="50 50 50" position="0 0 25" color="#D4A190" [mountPoint]="mp"></i-box> -->
+              
               <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
               <i-sphere size="50 50 50" position="900 900 500" color="#C390D4"></i-sphere>
               <i-box #flybox size="50 50 50" position="1500 1100 300" rotation="30 30 30" color="#D4A190">
