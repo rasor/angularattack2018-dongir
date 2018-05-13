@@ -28,6 +28,7 @@ export class HomePage implements AfterViewInit {
   infamousMazeSize = {};
   //wallsCount: number;
   wallMountPoints: string[];
+  wallPositions: string[];
 
   constructor(public navCtrl: NavController) {
     // enable infamous html-tags https://infamous.io/docs/install.html
@@ -54,9 +55,41 @@ export class HomePage implements AfterViewInit {
     };
     // Convert maze content to wallMountPoints
     this.wallMountPoints = this.getWallMountPoints();
+    this.wallPositions = this.getWallPositions();
   }
 
-  /* Convert maze content to wallMountPoints
+  /* Convert maze content to wallPositions
+  * "0 0 25" = Left Back ConstantHeightAboveFloor 
+  * "50 0 25" = Left+1 Back ConstantHeightAboveFloor 
+  * "0 50 25" = Left Back+1 closer ConstantHeightAboveFloor 
+  * */
+ private getWallPositions(): string[] {
+  let wallPositions: string[] = [];
+  let mazeIndex: number;
+  let left: string;
+  let back: string;
+  let currentContentType: number;
+  const HEIGTH_ABOVE_FLOOR = String(BOX_SIZE/2);
+  
+  // Loop rows
+  for (let row = 0; row < this.infamousMaze.rows; row++) {
+    // Loop cols
+    for (let col = 0; col < this.infamousMaze.cols; col++) {
+      // Read from maze
+      mazeIndex = (row * this.infamousMaze.cols) + col;
+      currentContentType = this.infamousMaze.maze[mazeIndex]
+      // If there is a wall then calc mountPoint
+      if (currentContentType === 1) {
+        left = String(col * BOX_SIZE);
+        back = String(row * BOX_SIZE);
+        wallPositions.push(left + " " + back + " " + HEIGTH_ABOVE_FLOOR);
+      }
+    }
+  }
+  return wallPositions;
+}
+
+/* Convert maze content to wallMountPoints
   * "0 0 25" = Left Back ConstantHeightAboveFloor 
   * "-1 0 25" = Left+1 Back ConstantHeightAboveFloor 
   * "0 -1 25" = Left Back+1 closer ConstantHeightAboveFloor 
@@ -68,7 +101,7 @@ export class HomePage implements AfterViewInit {
     let back: string;
     let currentContentType: number;
     const HEIGTH_ABOVE_FLOOR = String(BOX_SIZE/2);
-    
+
     // Loop rows
     for (let row = 0; row < this.infamousMaze.rows; row++) {
       // Loop cols

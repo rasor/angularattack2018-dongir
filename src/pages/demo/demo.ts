@@ -25,7 +25,7 @@ export class DemoPage implements AfterViewInit {
   @ViewChild("inode") inode: ElementRef;
   ngAfterViewInit(): void {
     // sample from https://infamous.io/docs/workflows.html
-    const {Motor} = infamous.core
+    //const {Motor} = infamous.core
     let node: any;
     node = this.inode.nativeElement; // document.querySelector('i-node')
     console.log('Hello ' + node.tagName);

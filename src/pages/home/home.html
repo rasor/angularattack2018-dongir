@@ -13,7 +13,7 @@
   
   <div id="frame">
       <div id="content">
-        <!-- <div class="box" *ngFor="let mp of wallMountPoints" [title]="mp">I am a div {{mp}}</div> -->
+        <!-- <div class="box" *ngFor="let wp of wallPositions" [title]="wp">I am a div {{wp}}</div> -->
 
         <i-scene experimental-webgl="true" id="scene"
             backgroundColor="dimgray"
@@ -40,16 +40,21 @@
                 size="10 10 10" color="gold"
                 position="800 900 800"
                 receive-shadow="false" cast-shadow="false">
-                <i-point-light color="teal" size="0 0 0" cast-shadow="true" intensity="2"></i-point-light>
+                <i-point-light color="white" size="0 0 0" cast-shadow="true" intensity="1.5"></i-point-light>
               </i-mesh>
 
               <!-- box standing on floor (Z=25) - due to it is relative to tilted floor.
                 mountPoint moves the box one pos compared to its size -->
-              <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="0 -13 0"></i-box><!-- left back -->
-              <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="-1 -13 0"></i-box><!-- left+1 back -->
-              <i-box size="50 50 50" position="0 0 25" color="#D4A190" mountPoint="0 -14 0"></i-box><!-- left back-1 closer -->
+              <i-box size="50 50 50" position="0 0 25" color="red" mountPoint="0 -13 0"></i-box><!-- left back -->
+              <i-box size="50 50 50" position="0 0 25" color="red" mountPoint="-1 -13 0"></i-box><!-- left+1 back -->
+              <i-box size="50 50 50" position="0 0 25" color="red" mountPoint="0 -14 0"></i-box><!-- left back-1 closer -->
 
+              <i-box size="50 50 50" position="0 500 25" color="#D4A190"></i-box><!-- left back -->
+              <i-box size="50 50 50" position="50 500 25" color="#D4A190"></i-box><!-- left+1 back -->
+              <i-box size="50 50 50" position="0 550 25" color="#D4A190"></i-box><!-- left back-1 closer -->
+              
               <!-- <i-box *ngFor="let mp of wallMountPoints" size="50 50 50" position="0 0 25" color="#D4A190" [mountPoint]="mp"></i-box> -->
+              <!-- <i-box *ngFor="let wp of wallPositions" size="50 50 50" [position]="wp" color="#D4A190"></i-box> -->
               
               <!-- i-sphere and i-box are short-hand for i-mesh with a has="" attribute specifying the geometries -->
               <i-sphere size="50 50 50" position="900 900 500" color="#C390D4"></i-sphere>
