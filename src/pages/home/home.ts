@@ -6,8 +6,6 @@ import { MazeProvider, ExtMaze } from '../../providers/maze/maze';
 //import infamous from 'infamous'
 declare var infamous: any; 
 
-const BOX_SIZE = 50;
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -21,18 +19,19 @@ export class HomePage implements AfterViewInit {
   * 4 = monster 
   * */
   infamousMaze = {
-    "cols": 51,
-    "rows": 3,//31,
-    "maze": [
+    cols: 51,
+    rows: 3,//31,
+    maze: [
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
       1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,0,1,
       1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-  ]};
-  infamousMazeSize = {};
-  //wallsCount: number;
+    ],
+    boxSize: 50,
+    floorSize: {}
+  };
+  
   wallVectorPositions: Vector3[];
 
-  extMaze: ExtMaze;
   error: any;
 
   constructor(public navCtrl: NavController, public mazeSvc: MazeProvider) {
@@ -53,11 +52,11 @@ export class HomePage implements AfterViewInit {
 
   private getMazeData_GotData(data: ExtMaze): void {
     // clone the data object, using its known ExtMaze shape
-    this.extMaze = { ...data };
-    this.getMazeData_PrepareMazeData(this.extMaze);
+    let extMaze = { ...data };
+    this.getMazeData_PrepareMazeData(extMaze);
   }
 
-  public getMazeData_PrepareMazeData(extMaze: ExtMaze):void{
+  private getMazeData_PrepareMazeData(extMaze: ExtMaze):void{
     // Validate initial maze data
     if (this.infamousMaze.rows * this.infamousMaze.cols > this.infamousMaze.maze.length) {
       let errMsg = 'Too few data in infamousMaze.maze[]';
@@ -65,12 +64,10 @@ export class HomePage implements AfterViewInit {
       throw new Error(errMsg);
     }
 
-    // Count walls in maze
-    //this.wallsCount = this.infamousMaze.maze.filter(contentType => contentType = 1).length;
     // Calculate pixel size
-    this.infamousMazeSize = {
-      "width": this.infamousMaze.rows * BOX_SIZE,
-      "depth": this.infamousMaze.cols * BOX_SIZE,
+    this.infamousMaze.floorSize = {
+      width: this.infamousMaze.rows * this.infamousMaze.boxSize,
+      depth: this.infamousMaze.cols * this.infamousMaze.boxSize,
     };
     // Convert maze content to wallPositions
     this.wallVectorPositions = this.getMazeData__GetVectorWallPositions();
@@ -88,6 +85,7 @@ export class HomePage implements AfterViewInit {
     //let back: string;
     let currentContentType: number;
     let currentVector: Vector3;
+    const BOX_SIZE = this.infamousMaze.boxSize;
     const HEIGTH_ABOVE_FLOOR = BOX_SIZE/2;
     
     // Loop rows
