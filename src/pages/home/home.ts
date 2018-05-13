@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Vector3 } from 'three';
+import { MazeProvider } from '../../providers/maze/maze';
+import { ConfigProviderBL } from '../../providers/config/config.compont';
 
 //import infamous from 'infamous'
 declare var infamous: any; 
@@ -31,10 +33,13 @@ export class HomePage implements AfterViewInit {
   //wallsCount: number;
   wallVectorPositions: Vector3[];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private mazeSvc: MazeProvider, private cfgSvc: ConfigProviderBL) {
     // enable infamous html-tags https://infamous.io/docs/install.html
     infamous.html.useDefaultNames();
 
+    let cfgJson = cfgSvc.config;
+
+    //let mazeJson = mazeSvc.getSampleMaze();
     // Initialize maze data
     this.prepareMazeData();
   }
@@ -66,8 +71,8 @@ export class HomePage implements AfterViewInit {
   private getVectorWallPositions(): Vector3[] {
     let wallPositions: Vector3[] = [];
     let mazeIndex: number;
-    let left: string;
-    let back: string;
+    //let left: string;
+    //let back: string;
     let currentContentType: number;
     let currentVector: Vector3;
     const HEIGTH_ABOVE_FLOOR = BOX_SIZE/2;
@@ -96,7 +101,7 @@ export class HomePage implements AfterViewInit {
     let node: any;
     node = this.flybox.nativeElement; // document.querySelector('i-node')
     console.log('Hello ' + node.tagName);
-    node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
+    //node.rotation = ( x, y, z ) => [ ++x, ++y, ++z ] //   
   }
 
 }

@@ -1,0 +1,5 @@
+{
+  "readme": "https://v5.angular.io/guide/http",
+  "heroesUrl": "api/heroes",
+  "textfile": "assets/textfile.txt"
+}
